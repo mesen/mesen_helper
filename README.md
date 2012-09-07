@@ -1,12 +1,12 @@
-# FormBuilder
+# MesenForms
 
-TODO: Write a gem description
+
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'form_builder'
+    gem 'mesen_forms'
 
 And then execute:
 
@@ -14,11 +14,14 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install form_builder
+    $ gem install mesen_forms
 
-## Usage
 
-TODO: Write usage instructions here
+Usage Instruction:
+  form_for @site do |f|
+
+Using mesen_forms:
+  mesen_form_for @site do |f|
 
 ## Contributing
 
