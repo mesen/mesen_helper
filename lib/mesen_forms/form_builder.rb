@@ -1,7 +1,7 @@
 module MesenForms
   class FormBuilder < ::ActionView::Helpers::FormBuilder
     
-   %w[text_area text_field password_field collection_select].each do |method_name|
+    %w[text_area text_field password_field collection_select].each do |method_name|
       define_method(method_name) do |attribute, *options|
         opts = options.extract_options!
         if opts[:skip_label]
@@ -21,15 +21,15 @@ module MesenForms
     end
 
     def errors object
-      #if object.errors.any?
-        #content_tag :div, :class => 'alert span7 alert-error' do
-        #  content_tag(:a, "&times;".html_safe, href: "#", class: "close", data: {dismiss: "alert"})+
-        #  content_tag(:h3, I18n.t('activerecord.errors.template.header', :count => object.errors.size, :model => I18n.t(object.class.to_s.underscore, :scope => [:activerecord, :models])))+
-        #  content_tag(:ul) do
-        #    object.errors.full_messages.reduce('') { |ccc, message| ccc << content_tag(:li, message) }.html_safe
-        #  end
-        #end
-      #end
+      if object.errors.any?
+        content_tag :div, :class => 'alert span7 alert-error' do
+          content_tag(:a, "&times;".html_safe, href: "#", class: "close", data: {dismiss: "alert"})+
+          content_tag(:h3, I18n.t('activerecord.errors.template.header', :count => object.errors.size, :model => I18n.t(object.class.to_s.underscore, :scope => [:activerecord, :models])))+
+          content_tag(:ul) do
+            object.errors.full_messages.reduce('') { |ccc, message| ccc << content_tag(:li, message) }.html_safe
+          end
+        end
+      end
     end
 
     def image_upload(attribute, options={})
@@ -72,23 +72,21 @@ module MesenForms
     end
 
     def control_group
-      #content_tag(:div, class: 'control-group') do
+      content_tag(:div, class: 'control-group') do
         yield
-      #end
+      end
     end
 
     def controls options={}
-      #content_tag :div, class: 'controls' do
+      content_tag :div, class: 'controls' do
         yield
-      #end
+      end
     end
 
     def help_block string
-      #content_tag :p, class: 'help-block' do
-      #  I18n.t string, :scope => [:activerecord, :help_strings, @template.controller_name.singularize]
-      #end
+      content_tag :p, class: 'help-block' do
+        I18n.t string, :scope => [:activerecord, :help_strings, @template.controller_name.singularize]
+      end
     end
-
-    
   end
 end
