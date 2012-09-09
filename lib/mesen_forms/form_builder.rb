@@ -1,6 +1,6 @@
 module MesenForms
   class FormBuilder < ::ActionView::Helpers::FormBuilder
-    delegate :content_tag, :button_tag, :link_to, :to => :@template
+    delegate :content_tag, :button_tag, :submit_tag, :link_to, :to => :@template
     
     %w[text_area text_field password_field collection_select].each do |method_name|
       define_method(method_name) do |attribute, *options|
@@ -87,6 +87,35 @@ module MesenForms
     def help_block string
       content_tag :p, class: 'help-block' do
         I18n.t string, :scope => [:activerecord, :help_strings, @template.controller_name.singularize]
+      end
+    end
+
+    def form_actions options={}
+      content_tag :div, :class => 'form-actions' do
+        if current_user
+          if (defined? object.is_published) && (object.id) && (object.is_published == true)
+            pub_btn_txt = t :save_changes, :scope => [:layouts, :admin]
+          else
+            pub_btn_txt = t :publish, :scope => [:layouts, :admin]
+          end
+          c = submit_tag pub_btn_txt, :name => 'submit', :class => 'btn btn-primary'
+          c << ' '
+          # you can not save a published object as a draft
+          if (defined? object.is_published) && ((object.id.nil? == true))
+            c << submit_tag('Lagre som kladd', :name => 'draft', :class => 'btn')
+          elsif (defined? object.is_published) && (object.is_published == false) && (object.id.nil? == false)
+            c << submit_tag('Lagre endringer i kladd', :name => 'draft', :class => 'btn')
+          end
+          c
+        else
+          if (object.id.nil? == true)
+            pub_btn_txt = t :save, :scope => [:layouts, :admin]
+          else
+            pub_btn_txt = t :save_changes, :scope => [:layouts, :admin]
+          end
+          c = submit_tag pub_btn_txt, :name => 'draft', :class => 'btn btn-primary'
+        end
+        # c += submit_tag 'Forhåndsvisning', :name => 'preview', :class => 'btn pull-right'
       end
     end
   end
