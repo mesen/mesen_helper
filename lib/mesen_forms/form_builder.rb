@@ -94,9 +94,9 @@ module MesenForms
       content_tag :div, :class => 'form-actions' do
         if current_user
           if (defined? object.is_published) && (object.id) && (object.is_published == true)
-            pub_btn_txt = t :save_changes, :scope => [:layouts, :admin]
+            pub_btn_txt = I18n.t :save_changes, :scope => [:layouts, :admin]
           else
-            pub_btn_txt = t :publish, :scope => [:layouts, :admin]
+            pub_btn_txt = I18n.t :publish, :scope => [:layouts, :admin]
           end
           c = submit_tag pub_btn_txt, :name => 'submit', :class => 'btn btn-primary'
           c << ' '
@@ -109,9 +109,9 @@ module MesenForms
           c
         else
           if (object.id.nil? == true)
-            pub_btn_txt = t :save, :scope => [:layouts, :admin]
+            pub_btn_txt = I18n.t :save, :scope => [:layouts, :admin]
           else
-            pub_btn_txt = t :save_changes, :scope => [:layouts, :admin]
+            pub_btn_txt = I18n.t :save_changes, :scope => [:layouts, :admin]
           end
           c = submit_tag pub_btn_txt, :name => 'draft', :class => 'btn btn-primary'
         end
