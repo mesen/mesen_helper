@@ -1,6 +1,6 @@
 module MesenForms
   class FormBuilder < ::ActionView::Helpers::FormBuilder
-    delegate :content_tag, :button_tag, :submit_tag, :link_to, :to => :@template
+    delegate :content_tag, :button_tag, :submit_tag, :link_to, :current_user, :to => :@template
     
     %w[text_area text_field password_field collection_select].each do |method_name|
       define_method(method_name) do |attribute, *options|
