@@ -25,7 +25,7 @@ module MesenForms
       end
     end
 
-    def errors object
+    def errors options={}
       if object.errors.any?
         content_tag :div, :class => 'alert span7 alert-error' do
           content_tag(:a, "&times;".html_safe, href: "#", class: "close", data: {dismiss: "alert"})+
