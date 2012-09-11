@@ -16,7 +16,7 @@ module MesenForms
               else
                 if method_name == 'text_area'
                   opts[:rows]
-                end+
+                end
                 super(attribute, *options)
               end+
               if opts[:help]
