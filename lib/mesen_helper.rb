@@ -1,7 +1,7 @@
 # encoding: utf-8
-require 'mesen_forms/engine' if defined?(::Rails)
+require 'mesen_helper/engine' if defined?(::Rails)
 
-module MesenForms
+module MesenHelper
   extend ActiveSupport::Autoload
 
   autoload :FormBuilder

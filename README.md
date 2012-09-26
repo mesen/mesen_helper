@@ -1,4 +1,4 @@
-# MesenForms
+# MesenHelper
 
 
 
@@ -6,7 +6,7 @@
 
 Add this line to your application's Gemfile:
 
-    gem 'mesen_forms'
+    gem 'mesen_helper'
 
 And then execute:
 
@@ -14,14 +14,8 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install mesen_forms
+    $ gem install mesen_helper
 
-
-Usage Instruction:
-  form_for @site do |f|
-
-Using mesen_forms:
-  mesen_form_for @site do |f|
 
 ## Contributing
 
