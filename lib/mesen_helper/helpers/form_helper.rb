@@ -1,3 +1,4 @@
+# encoding: utf-8
 module MesenHelper
   module Helpers
     module FormHelper
