@@ -80,16 +80,6 @@ module MesenHelper
       def clean_paragraph_contents str
         sanitize str.html_safe, :tags => %w(a strong b i em br), :attributes => %w(href alt)
       end
-
-      def menu_item object
-        path = article_path(object)
-        active = (@article.slug == object.slug) ? true : false
-        content_tag(:li, :class => ('active' if active)) do
-          content_tag(:a, :href => path) do
-            object.title
-          end
-        end
-      end
     end
   end
 end
