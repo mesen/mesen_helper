@@ -35,7 +35,12 @@ module MesenHelper
         if date > Date.today - 2.days
           "for #{time_ago_in_words(date)} siden"
         else
-          "#{l date, :format => :short}"
+          if date.year != Date.today.year
+            date_format = :long
+          else
+            date_format = :short
+          end
+          "#{l date, :format => date_format}"
         end
       end
 
