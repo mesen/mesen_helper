@@ -44,6 +44,55 @@ module MesenHelper
         end
       end
 
+      def clean_body2 str
+      
+        # replace <div> with <p>
+        if /<div>/.match(str)
+          str.gsub!(/<(\/?)div>/, '<\1p>')
+        end
+
+        # replace lines wrapped in <strong> with <h3>
+        if /^(\s*)?<strong>(.*)<\/strong>(<br \/>|<\/p>)?(\s*)?$/.match(str)
+          str.gsub!(/^(\s*)?<strong>(.*)<\/strong>(<br \/>|<\/p>)?(\s*)?$/, '<h3>\2</h3>\3')
+        end
+
+        if /<strong>(.*)<\/strong>/.match(str)
+          str.gsub!(/<strong>(.*)<\/strong>/, '<h3>\1</h3>')
+        end
+      
+        #replace <p> wrappers around <h3>
+        if /<p>(\s*)?(<h3>.*<\/h3>)(\s*)?<\/p>/.match(str)
+          str.gsub!(/<p>(\s*)?(<h3>.*<\/h3>)(\s*)?<\/p>/, '\2')
+        end
+
+        # another ckeditor stupid thing
+        if /<br \/>(\s*)?(<h3>.*<\/h3>)(\s*)?<br \/>/.match(str)
+          str.gsub!(/<br \/>(\s*)?(<h3>.*<\/h3>)(\s*)?<br \/>/, '</p>\2<p>')
+        end
+
+        # and another one
+        if /<p>(\s*)?(<h3>.*<\/h3>)(\s*)?<br \/>$/.match(str)
+          str.gsub!(/<p>(\s*)?(<h3>.*<\/h3>)(\s*)?<br \/>$/, '\2<p>')
+        end
+
+        # wrap in paragraphs if none is present
+        if str !~/<p>/
+          str = simple_format str
+        end
+
+        # remove empty paragraphs
+        if /<p>\s*(&nbsp;)?\s*<\/p>/.match(str)
+          str.gsub!(/<p>\s*(&nbsp;)?\s*<\/p>/, '<br>')
+        end
+
+        if /<p><div>&nbsp;<\/div>\s?<\/p>/.match(str)
+          str.gsub!(/<p><div>&nbsp;<\/div>\s?<\/p>/, '<span> </span>')
+        end
+
+        # regular sanitizing
+        sanitize str.html_safe, :tags => %w(p img a ul ol li h1 h2 h3 h4 h5 strong b i em br), :attributes => %w(href alt src)
+      end
+
       def clean_body str
         # replace <div> with <p>
         if /<div>/.match(str)
