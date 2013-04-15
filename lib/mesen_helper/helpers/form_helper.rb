@@ -90,7 +90,7 @@ module MesenHelper
         end
 
         # regular sanitizing
-        sanitize str.html_safe, :tags => %w(p img a ul ol li h1 h2 h3 h4 h5 strong b i em br blockquote), :attributes => %w(href alt src)
+        sanitize str.html_safe, :tags => %w(p img a ul ol li h1 h2 h3 h4 h5 strong b i em br blockquote), :attributes => %w(href alt src style)
       end
 
       def clean_body str
