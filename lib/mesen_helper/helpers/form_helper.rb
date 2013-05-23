@@ -75,11 +75,6 @@ module MesenHelper
           str.gsub!(/<p>(\s*)?(<h3>.*<\/h3>)(\s*)?<br \/>$/, '\2<p>')
         end
 
-        # Delete breaks in list
-        if /<br \/>\s*?<li>/.match(str)
-          str.gsub!(/<br \/>\s*?<li>/, '<li>')
-        end
-
         # wrap in paragraphs if none is present
         if str !~/<p>/
           str = simple_format str
@@ -92,6 +87,12 @@ module MesenHelper
 
         if /<p><div>&nbsp;<\/div>\s?<\/p>/.match(str)
           str.gsub!(/<p><div>&nbsp;<\/div>\s?<\/p>/, '<span> </span>')
+        end
+
+
+        # Delete breaks in list
+        if /<br \/>\s*?<li>/.match(str)
+          str.gsub!(/<br \/>\s*?<li>/, '<li>')
         end
 
         # regular sanitizing
