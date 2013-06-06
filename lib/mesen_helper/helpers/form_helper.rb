@@ -44,7 +44,19 @@ module MesenHelper
         end
       end
 
+      def decoder str
+        # require 'htmlentities'
+        # Replace all &nbsp; with normal spaces, and replace all &aring;, &oslash; and smilar codes with ÆØÅ in the source code
+        HTMLEntities.new.decode(str)
+      end
+
       def clean_body2 str
+
+        begin
+          str = decoder(str)
+        rescue
+          puts "Add htmlentities to Gemfile"
+        end
       
         # replace <div> with <p>
         if /<div>/.match(str)
