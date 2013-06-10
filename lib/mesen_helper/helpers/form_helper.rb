@@ -57,6 +57,11 @@ module MesenHelper
         rescue
           puts "Add htmlentities to Gemfile"
         end
+
+         # Add </p><p> behind </strong> if it does not exist
+        if /<\/strong>([^<\/p>]+)/.match(str)
+          str.gsub!(/<\/strong>([^<\/p>]+)/, '</strong></p><p>\1')
+        end
       
         # replace <div> with <p>
         if /<div>/.match(str)
