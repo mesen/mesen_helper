@@ -97,6 +97,10 @@ module MesenHelper
           str = simple_format str
         end
 
+        if /\s&nbsp;\s/.match(str)
+          str.gsub!(/\s&nbsp;\s/, '')
+        end
+
         # remove empty paragraphs
         if /<p>\s*(&nbsp;)?\s*<\/p>/.match(str)
           str.gsub!(/<p>\s*(&nbsp;)?\s*<\/p>/, '<br>')
@@ -146,6 +150,7 @@ module MesenHelper
         if /<p>\s*(&nbsp;)?\s*<\/p>/.match(str)
           str.gsub!(/<p>\s*(&nbsp;)?\s*<\/p>/, '')
         end
+
         # wrap in paragraphs if none is present
         if str !~/<p>/
           str = simple_format str
