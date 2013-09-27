@@ -123,7 +123,9 @@ module MesenHelper
         end
 
         # Add several strongs behind to one strong
+        puts "_______________________________"
         while /(\s*)?<\/strong>(\s*)?<strong>/.match(str)
+          puts "DRIN"
           str.gsub!(/(\s*)?<\/strong>(\s*)?<strong>/,'')
         end
 
