@@ -122,6 +122,11 @@ module MesenHelper
           str.gsub!(/<(\/?)div>/, '<\1p>')
         end
 
+        # Add several strongs behind to one strong
+        if /(\s*)?<\/strong>(\s*)?<strong>/.match(str)
+          str.gsub!(/(\s*)?<\/strong>(\s*)?<strong>/,'')
+        end
+
         # replace lines wrapped in <strong> with <h3>
         if /^(\s*)?<strong>(.*)<\/strong>(<br \/>|<\/p>)?(\s*)?$/.match(str)
           str.gsub!(/^(\s*)?<strong>(.*)<\/strong>(<br \/>|<\/p>)?(\s*)?$/, '<h3>\2</h3>\3')
