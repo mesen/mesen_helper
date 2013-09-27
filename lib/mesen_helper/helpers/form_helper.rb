@@ -123,7 +123,7 @@ module MesenHelper
         end
 
         # Add several strongs behind to one strong
-        if /(\s*)?<\/strong>(\s*)?<strong>/.match(str)
+        while /(\s*)?<\/strong>(\s*)?<strong>/.match(str)
           str.gsub!(/(\s*)?<\/strong>(\s*)?<strong>/,'')
         end
 
