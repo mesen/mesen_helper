@@ -50,6 +50,43 @@ module MesenHelper
         HTMLEntities.new.decode(str)
       end
 
+      def clean_body_strong str
+
+        begin
+          str = decoder(str)
+        rescue
+          puts "Add htmlentities to Gemfile"
+        end
+      
+        # replace <div> with <p>
+        if /<div>/.match(str)
+          str.gsub!(/<(\/?)div>/, '<\1p>')
+        end
+
+        # wrap in paragraphs if none is present
+        if str !~/<p>/
+          str = simple_format str
+        end
+
+        # remove empty paragraphs
+        if /<p>\s*(&nbsp;)?\s*<\/p>/.match(str)
+          str.gsub!(/<p>\s*(&nbsp;)?\s*<\/p>/, '<br>')
+        end
+
+        if /<p><div>&nbsp;<\/div>\s?<\/p>/.match(str)
+          str.gsub!(/<p><div>&nbsp;<\/div>\s?<\/p>/, '<span> </span>')
+        end
+
+
+        # Delete breaks in list
+        if /<br \/>\s*?<li>/.match(str)
+          str.gsub!(/<br \/>\s*?<li>/, '<li>')
+        end
+
+        # regular sanitizing
+        sanitize str.html_safe, :tags => %w(p img a ul ol li h1 h2 h3 h4 h5 strong b i em br blockquote), :attributes => %w(href alt src style)
+      end
+
       def clean_body2 str
 
         begin
@@ -124,7 +161,7 @@ module MesenHelper
 
         # Add several strongs behind to one strong
         puts "_______________________________"
-        while /(\s*)?<\/strong>(\s*)?<strong>/.match(str)
+        if /(\s*)?<\/strong>(\s*)?<strong>/.match(str)
           puts "DRIN"
           str.gsub!(/(\s*)?<\/strong>(\s*)?<strong>/,'')
         end
